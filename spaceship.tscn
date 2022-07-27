@@ -1,0 +1,66 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://spaceship.gd" type="Script" id=1]
+[ext_resource path="res://spaceship.png" type="Texture" id=2]
+[ext_resource path="res://bullet.tscn" type="PackedScene" id=3]
+[ext_resource path="res://shipexplosion.tres" type="Material" id=4]
+
+[sub_resource type="Gradient" id=1]
+colors = PoolColorArray( 1, 1, 1, 1, 1, 1, 1, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 83.83
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 127.46
+initial_velocity_random = 0.54
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 100.0
+scale = 15.0
+scale_random = 0.59
+color_ramp = SubResource( 2 )
+
+[node name="spaceship" type="KinematicBody2D" groups=["players"]]
+position = Vector2( -1, 0 )
+collision_mask = 16
+script = ExtResource( 1 )
+Bullet = ExtResource( 3 )
+
+[node name="bang" type="Particles2D" parent="."]
+emitting = false
+amount = 24
+lifetime = 2.0
+one_shot = true
+speed_scale = 2.0
+explosiveness = 1.0
+local_coords = false
+process_material = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="."]
+polygon = PoolVector2Array( 16, 16, -16, 16, 0, -16 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="firetime" type="Timer" parent="."]
+wait_time = 0.8
+autostart = true
+
+[node name="projectiles" type="Node" parent="."]
+
+[node name="shotpuff" type="Particles2D" parent="."]
+position = Vector2( 1, -16 )
+emitting = false
+amount = 12
+lifetime = 0.25
+one_shot = true
+explosiveness = 0.84
+local_coords = false
+process_material = SubResource( 3 )
+
+[connection signal="timeout" from="firetime" to="." method="_on_firetime_timeout"]
