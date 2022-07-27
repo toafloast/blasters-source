@@ -1,9 +1,10 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://enemyspaceship1.tscn" type="PackedScene" id=1]
 [ext_resource path="res://shooter.gd" type="Script" id=2]
 [ext_resource path="res://enemybullet.tscn" type="PackedScene" id=3]
 [ext_resource path="res://threateningspaceship.png" type="Texture" id=4]
+[ext_resource path="res://lasor.wav" type="AudioStream" id=5]
 
 [sub_resource type="Curve" id=7]
 min_value = 1.0
@@ -61,5 +62,9 @@ texture = ExtResource( 4 )
 [node name="Timer" parent="." index="5"]
 wait_time = 2.0
 autostart = true
+
+[node name="shot" type="AudioStreamPlayer2D" parent="." index="10"]
+stream = ExtResource( 5 )
+volume_db = -19.227
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

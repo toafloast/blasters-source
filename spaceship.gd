@@ -36,8 +36,22 @@ func set_firerate(new : float):
 	$firetime.wait_time = new
 func get_firerate():
 	return $firetime.wait_time
+var buffness : int = 0
+func buff():
+	set_firerate(get_firerate() * 0.8)
+	buffness += 1
+	$buffness.emitting = true
+	$buffness.amount = buffness
+func debuff():
+	set_firerate(1.0)
+	buffness = 0
+	$buffness.emitting = false
+	
 
 func fire():
+	randomize()
+	$pew.pitch_scale = rand_range(0.9, 1.1)
+	$pew.play()
 	if !canfire:
 		return
 	$shotpuff.emitting = true
@@ -60,6 +74,7 @@ var jitteriness = 0.0
 
 var canfire : bool = true
 func _hurt():
+	$hurted.play()
 	get_node("../../CanvasLayer3/score").reduce_score(self, 80)
 #	print("shahwhada")
 	var newscore : Label = preload('res://scoretext.tscn').instance()
@@ -70,6 +85,7 @@ func _hurt():
 	var alang = $bang.duplicate()
 	add_child(alang)
 	alang.emitting = true
+	debuff()
 	set_physics_process(false)
 	canfire = false
 	jitteriness += 5

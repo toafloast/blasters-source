@@ -1,7 +1,7 @@
 extends Control
 
 
-var time = 100
+var time = 120
 # Called when the node enters the scene tree for the first time.
 func _process(delta: float) -> void:
 	if !get_tree().paused:
@@ -42,6 +42,7 @@ func reduce_score(scorer, points):
 
 
 func _on_Button_pressed() -> void:
+	get_tree().paused = false
 	get_tree().change_scene("res://mainmenu.tscn")
 	pass # Replace with function body.
 

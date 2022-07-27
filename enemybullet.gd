@@ -5,8 +5,13 @@ extends Projectile
 # var a: int = 2
 # var b: String = "text"
 
-
+var target
+var speed = 0.0
 # Called when the node enters the scene tree for the first time.
+func _process(delta: float) -> void:
+	rotate(get_angle_to(target.position) * delta / 2)
+	velocity = speed * Vector2.UP.rotated(rotation + PI/2)
+	._process(delta)
 
 func _on_bullet_body_entered(body: Node) -> void:
 	if !body:

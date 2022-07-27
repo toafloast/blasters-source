@@ -16,3 +16,10 @@ func follow_path(delta : float) -> void:
 	position = $pather/Path2D/PathFollow2D.position + $pather/Path2D.position
 	if flipped:
 		position.x = 720 - position.x
+
+func kill():
+	.kill()
+	#spawn somethin
+	var powerup = preload('res://shotboot.tscn').instance()
+	powerup.position = position
+	get_parent().add_child(powerup)

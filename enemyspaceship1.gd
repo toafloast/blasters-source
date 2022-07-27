@@ -55,8 +55,11 @@ func _hurt(amount, damager):
 			newscore.rect_position = position
 			newscore.text = "+" + str(value)
 		kill()
+	else:
+		$hurt.play()
 
 func kill():
+	$dead.play()
 	$AnimationPlayer.play('death')
 
 var off = false
